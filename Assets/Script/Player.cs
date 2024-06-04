@@ -5,7 +5,7 @@ using Mirror;
 public class Player : NetworkBehaviour
 {
     public int Chip;
-    public List<Cards> Cards;
+    public Cards cards;
     [SerializeField]
     public Transform showCard;
 

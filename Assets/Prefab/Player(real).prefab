@@ -579,7 +579,6 @@ MonoBehaviour:
   syncInterval: 0
   Chip: 0
   Cards: []
-  PlayerList: []
   showCard: {fileID: 8351532553199405561}
 --- !u!1 &1942575569434882488
 GameObject:

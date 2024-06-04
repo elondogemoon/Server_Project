@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using UnityEngine.UIElements;
+using Unity.VisualScripting;
 public class GameManager : NetworkBehaviour
 {
     public static GameManager Instance;
 
     public Cards cardManager;
     public Player player;
+    
 
     public override void OnStartServer()
     {
@@ -33,10 +35,12 @@ public class GameManager : NetworkBehaviour
         }
         SetGameCard(deck, cardSpawnPos);
     }
+    [Client]
     public void SetGameCard(List<GameObject> Deck, Transform cardSpawnPos)
     {
+        int i = 10;
         Debug.Log(player);
-        var cardObj = Deck[Deck.Count - 1];
+        var cardObj = Deck[Deck.Count - i];
         if(cardObj == null || cardSpawnPos == null)
         {
             return;
@@ -46,9 +50,16 @@ public class GameManager : NetworkBehaviour
 
         // player.showCard.transform
         GameObject showCard = Instantiate(cardObj, cardSpawnPos);
+
+        i--;
+        Debug.Log(player.name);
+        
+    }
+    [ClientRpc]
+    public void JudgeWinner(Player player)
+    {
         
 
-        // 부모의 위치에 카드 위치 설정
-        
+
     }
 }
