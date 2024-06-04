@@ -5,33 +5,50 @@ using Mirror;
 using UnityEngine.UIElements;
 public class GameManager : NetworkBehaviour
 {
-    public List <Cards> Deck;
-    public List <Player> Player;
+    public static GameManager Instance;
+
+    public Cards cardManager;
+    public Player player;
 
     public override void OnStartServer()
     {
         base.OnStartServer();
     }
-    [Command]
-    public void InitializeDeck()
+
+    private void Awake()
     {
-        Deck.Clear();
-        for(int i = 1;i<10;i++)
-        {
-            Deck.Add(new Cards(i));
-        }
-        ShuffleDeck();
+        Instance = this;
     }
-    public void SetGameCard()
+
+    public void ShuffleDeck(Transform cardSpawnPos)
     {
+        List<GameObject> deck = cardManager.cards;
+        for(int i = 0; i < deck.Count; i++)
+        {
+            int RandomIndex = Random.Range(i,deck.Count);
+            GameObject Temp = deck[i];
+            deck[i] = deck[RandomIndex];
+            deck[RandomIndex] = Temp;
+            Debug.Log(deck[RandomIndex]);
+        }
+        SetGameCard(deck, cardSpawnPos);
+    }
+    public void SetGameCard(List<GameObject> Deck, Transform cardSpawnPos)
+    {
+        Debug.Log(player);
+        var cardObj = Deck[Deck.Count - 1];
+        if(cardObj == null || cardSpawnPos == null)
+        {
+            return;
+        }
+
+        // GameObject gObj = GameObject.Find()
+
+        // player.showCard.transform
+        GameObject showCard = Instantiate(cardObj, cardSpawnPos);
         
-    }
-    [Command]
-    public void ShuffleDeck()
-    {
-        for(int i = 0; i < Deck.Count; i++)
-        {
-            
-        }
+
+        // 부모의 위치에 카드 위치 설정
+        
     }
 }

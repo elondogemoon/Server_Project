@@ -2,12 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cards 
+public class Cards : MonoBehaviour
 {
-    public int cardValue;
-
-    public Cards(int cardValue)
-    {
-        this.cardValue = cardValue;
-    }
+    public List <GameObject> cards;
 }

@@ -6,7 +6,14 @@ public class Player : NetworkBehaviour
 {
     public int Chip;
     public List<Cards> Cards;
-    public List<Player> PlayerList;
+    [SerializeField]
+    public Transform showCard;
+
+    public override void OnStartClient()
+    {
+        GameManager.Instance.player = this;
+        GameManager.Instance.ShuffleDeck(showCard);
+    }
 
     private void Update()
     {
