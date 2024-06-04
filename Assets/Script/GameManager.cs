@@ -10,7 +10,7 @@ public class GameManager : NetworkBehaviour
 
     public Cards cardManager;
     public Player player;
-    
+    public int count = 10;
 
     public override void OnStartServer()
     {
@@ -38,9 +38,9 @@ public class GameManager : NetworkBehaviour
     [Client]
     public void SetGameCard(List<GameObject> Deck, Transform cardSpawnPos)
     {
-        int i = 10;
+        
         Debug.Log(player);
-        var cardObj = Deck[Deck.Count - i];
+        var cardObj = Deck[Deck.Count - count];
         if(cardObj == null || cardSpawnPos == null)
         {
             return;
@@ -50,15 +50,21 @@ public class GameManager : NetworkBehaviour
 
         // player.showCard.transform
         GameObject showCard = Instantiate(cardObj, cardSpawnPos);
-
-        i--;
+        
+        count--;
         Debug.Log(player.name);
         
     }
     [ClientRpc]
-    public void JudgeWinner(Player player)
+    public void JudgeWinner(List<GameObject> Deck)
     {
-        
+        foreach(GameObject deck in Deck)
+        {
+            if(deck != null)
+            {
+                
+            }
+        }
 
 
     }
