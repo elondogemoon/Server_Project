@@ -2,70 +2,87 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
-using UnityEngine.UIElements;
-using Unity.VisualScripting;
+
 public class GameManager : NetworkBehaviour
 {
     public static GameManager Instance;
-
-    public Cards cardManager;
     public Player player;
+    public Cards cardManager;
     public int count = 10;
-
-    public override void OnStartServer()
-    {
-        base.OnStartServer();
-    }
+    public Dictionary<Player, int> playerCurrentCard = new Dictionary<Player, int>();
 
     private void Awake()
     {
         Instance = this;
     }
 
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+    }
+
     public void ShuffleDeck(Transform cardSpawnPos)
     {
         List<GameObject> deck = cardManager.cards;
-        for(int i = 0; i < deck.Count; i++)
+        for (int i = 0; i < deck.Count; i++)
         {
-            int RandomIndex = Random.Range(i,deck.Count);
-            GameObject Temp = deck[i];
-            deck[i] = deck[RandomIndex];
-            deck[RandomIndex] = Temp;
-            Debug.Log(deck[RandomIndex]);
+            int randomIndex = Random.Range(i, deck.Count);
+            GameObject temp = deck[i];
+            deck[i] = deck[randomIndex];
+            deck[randomIndex] = temp;
+            Debug.Log(deck[randomIndex]);
         }
-        SetGameCard(deck, cardSpawnPos);
+        // ShuffleDeck은 카드를 셔플하는 역할만 합니다.
     }
+
     [Client]
-    public void SetGameCard(List<GameObject> Deck, Transform cardSpawnPos)
+    public void SetGameCard(List<GameObject> deck, Transform cardSpawnPos, Player player)
     {
-        
         Debug.Log(player);
-        var cardObj = Deck[Deck.Count - count];
-        if(cardObj == null || cardSpawnPos == null)
+        if (count <= 0)
         {
             return;
         }
 
-        // GameObject gObj = GameObject.Find()
+        var cardObj = deck[deck.Count - count];
+        if (cardObj == null || cardSpawnPos == null)
+        {
+            return;
+        }
 
-        // player.showCard.transform
         GameObject showCard = Instantiate(cardObj, cardSpawnPos);
-        
+        Cards cardComponent = showCard.GetComponent<Cards>();
+        if (cardComponent != null)
+        {
+            playerCurrentCard[player] = cardComponent.value;
+        }
         count--;
         Debug.Log(player.name);
-        
     }
+
     [ClientRpc]
-    public void JudgeWinner(List<GameObject> Deck)
+    public void JudgeWinner()
     {
-        foreach(GameObject deck in Deck)
+        Player winner = null;
+        int highestValue = -1;
+
+        foreach (KeyValuePair<Player, int> entry in playerCurrentCard)
         {
-            if(deck != null)
+            if (entry.Value > highestValue)
             {
-                
+                highestValue = entry.Value;
+                winner = entry.Key;
             }
         }
 
-
+        if (winner != null)
+        {
+            Debug.Log("Winner is: " + winner.name + " with card value: " + highestValue);
+            
+        }
+        else
+        {
+            Debug.Log("No winner could be determined.");
+        }
     }
 }
