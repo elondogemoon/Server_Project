@@ -77,12 +77,23 @@ public class GameManager : NetworkBehaviour
 
         if (winner != null)
         {
-            Debug.Log("Winner is: " + winner.name + " with card value: " + highestValue);
-            
+            Debug.Log(winner);
+
+            // 승자에게는 승리 메시지를 표시하고 패자에게는 패배 메시지를 표시
+            foreach (Player player in playerCurrentCard.Keys)
+            {
+                if (player == winner)
+                {
+                    player.GetComponent<UIManager>().WinnerText();
+                }
+                else
+                {
+                    player.GetComponent<UIManager>().LoserText();
+                }
+            }
         }
-        else
-        {
-            Debug.Log("No winner could be determined.");
-        }
+       
     }
+
+
 }

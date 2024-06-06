@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.07125862, g: 0.063006945, b: 0.04084172, a: 1}
+  m_IndirectSpecularColor: {r: 0.07125872, g: 0.06300698, b: 0.040841796, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -811,17 +811,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1532217911 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 612945641146073053, guid: b6c9f4dc2eca5264493dbc1a0b872a22, type: 3}
-  m_PrefabInstance: {fileID: 1365061903592064440}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1631591685
 GameObject:
   m_ObjectHideFlags: 0
@@ -1366,29 +1355,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 330840146224980212, guid: b6c9f4dc2eca5264493dbc1a0b872a22, type: 3}
-      propertyPath: m_Name
-      value: notenough
-      objectReference: {fileID: 0}
-    - target: {fileID: 330840146224980212, guid: b6c9f4dc2eca5264493dbc1a0b872a22, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 612945641146073053, guid: b6c9f4dc2eca5264493dbc1a0b872a22, type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 612945641146073053, guid: b6c9f4dc2eca5264493dbc1a0b872a22, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 612945641146073053, guid: b6c9f4dc2eca5264493dbc1a0b872a22, type: 3}
-      propertyPath: m_Color.r
-      value: 0.6981132
-      objectReference: {fileID: 0}
-    - target: {fileID: 612945641146073053, guid: b6c9f4dc2eca5264493dbc1a0b872a22, type: 3}
-      propertyPath: m_FontData.m_FontSize
-      value: 14
+    - target: {fileID: 1130682695, guid: b6c9f4dc2eca5264493dbc1a0b872a22, type: 3}
+      propertyPath: sceneId
+      value: 4030896038
       objectReference: {fileID: 0}
     - target: {fileID: 1365061904882792073, guid: b6c9f4dc2eca5264493dbc1a0b872a22, type: 3}
       propertyPath: m_Pivot.x
@@ -1474,33 +1443,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1365061904882792074, guid: b6c9f4dc2eca5264493dbc1a0b872a22, type: 3}
-      propertyPath: notenoughMoney
-      value: 
-      objectReference: {fileID: 1532217911}
     - target: {fileID: 1365061904882792085, guid: b6c9f4dc2eca5264493dbc1a0b872a22, type: 3}
       propertyPath: m_Name
       value: BettingUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 1365061904882792085, guid: b6c9f4dc2eca5264493dbc1a0b872a22, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1780123222619729609, guid: b6c9f4dc2eca5264493dbc1a0b872a22, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnCliickBetting
-      objectReference: {fileID: 0}
-    - target: {fileID: 3677474446010211300, guid: b6c9f4dc2eca5264493dbc1a0b872a22, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6212257481838591862, guid: b6c9f4dc2eca5264493dbc1a0b872a22, type: 3}
-      propertyPath: m_CullTransparentMesh
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7828635196165331986, guid: b6c9f4dc2eca5264493dbc1a0b872a22, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6c9f4dc2eca5264493dbc1a0b872a22, type: 3}

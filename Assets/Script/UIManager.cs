@@ -1,16 +1,19 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class UIManager : NetworkBehaviour
 {
     public Button bettingButton;
     public Button dieButton;
     public TextMeshProUGUI chipCount;
     public TextMeshProUGUI bettingedCount;
     public Text notenoughMoney;
+    public TextMeshProUGUI winnerText;
+    public TextMeshProUGUI loseText;
     public int getChip = 26;
     public int bettingChip;
     public bool isDie = false;
@@ -43,6 +46,7 @@ public class UIManager : MonoBehaviour
     }
     public void OnClickDie()
     {
+        bettingButton.enabled = false;
         getChip -= 5;
         chipCount.text = getChip.ToString();
         bettingChip += 5;
@@ -56,5 +60,15 @@ public class UIManager : MonoBehaviour
     {
         bettingedCount.text = bettingChip.ToString();
         isBetting = true;
+    }
+    [ClientRpc]
+    public void WinnerText()
+    {
+        winnerText.enabled = true;
+    }
+    [ClientRpc]
+    public void LoserText()
+    {
+        loseText.enabled = true;
     }
 }
