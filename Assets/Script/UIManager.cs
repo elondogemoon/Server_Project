@@ -51,10 +51,12 @@ public class UIManager : NetworkBehaviour
     public void OnClickDie()
     {
         bettingButton.enabled = false;
+        dieButton.enabled = false;
         getChip -= 5;
         chipCount.text = getChip.ToString();
         bettingChip += 5;
         isDie = true;
+       
         if (getChip <= 0||getChip<5)
         {
             dieButton.enabled = false;
@@ -64,6 +66,8 @@ public class UIManager : NetworkBehaviour
     {
         bettingedCount.text = bettingChip.ToString();
         isBetting = true;
+        dieButton.enabled=false;
+        bettingButton.enabled=false;
     }
 
     public void WinnerText()

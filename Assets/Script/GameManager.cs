@@ -81,9 +81,14 @@ public class GameManager : NetworkBehaviour
                 }
             }
         }
+        
     }
-    public void DestroyUsedCard()
+    public void DestroyUsedCard(List<NetworkIdentity> SpawnedCard)
     {
+        foreach (NetworkIdentity item in SpawnedCard)
+        {
+           
+        }
         //foreach (var item in playerCurrentCard)
         //{
             
