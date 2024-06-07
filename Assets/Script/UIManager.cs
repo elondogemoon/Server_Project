@@ -7,13 +7,14 @@ using UnityEngine.UI;
 
 public class UIManager : NetworkBehaviour
 {
+    public static UIManager Instance;
     public Button bettingButton;
     public Button dieButton;
     public TextMeshProUGUI chipCount;
     public TextMeshProUGUI bettingedCount;
     public Text notenoughMoney;
-    public TextMeshProUGUI winnerText;
-    public TextMeshProUGUI loseText;
+    public GameObject winnerText;
+    public GameObject loseText;
     public int getChip = 26;
     public int bettingChip;
     public bool isDie = false;
@@ -27,8 +28,11 @@ public class UIManager : NetworkBehaviour
         
         //bettingButton.onClick.AddListener(OnClickBetting);
     }
+    private void Awake()
+    {
+        Instance = this;
+    }
 
-  
 
     public void OnClickBetting()
     {
@@ -61,14 +65,24 @@ public class UIManager : NetworkBehaviour
         bettingedCount.text = bettingChip.ToString();
         isBetting = true;
     }
-    [ClientRpc]
+
     public void WinnerText()
     {
-        winnerText.enabled = true;
+        
+        Debug.Log("¿Ã∞≈ »£√‚µ ");
+        winnerText.SetActive(true);
+        
     }
-    [ClientRpc]
+
     public void LoserText()
     {
-        loseText.enabled = true;
+        Debug.Log("¿˙∞≈ »£√‚µ ");
+
+        loseText.SetActive(true);
+    }
+    public void OffUI()
+    {
+        winnerText.SetActive(false);
     }
 }
+

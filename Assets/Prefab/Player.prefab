@@ -1631,9 +1631,9 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   Chip: 0
-  Cards: []
-  PlayerList: []
+  cards: {fileID: 0}
   showCard: {fileID: 2880652522894558318}
+  UIManager: {fileID: 1365061904882792074, guid: b6c9f4dc2eca5264493dbc1a0b872a22, type: 3}
 --- !u!1 &1954743680365594
 GameObject:
   m_ObjectHideFlags: 0

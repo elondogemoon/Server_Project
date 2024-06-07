@@ -2,98 +2,91 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using System.Reflection;
 
 public class GameManager : NetworkBehaviour
 {
     public static GameManager Instance;
-    public Player player;
-    public Cards cardManager;
+    public Player localPlayer;
+    public Deck cardManager;
+    [SyncVar]
     public int count = 10;
-    public Dictionary<Player, int> playerCurrentCard = new Dictionary<Player, int>();
-
+    private int drawCount = 0;
+    public Dictionary<NetworkConnectionToClient, int> playerCurrentCard = new Dictionary<NetworkConnectionToClient, int>();
+    public List<NetworkConnectionToClient> AllPlayers = new List<NetworkConnectionToClient>();
+    public List<NetworkIdentity> SpawnedCard = new List<NetworkIdentity>();
     private void Awake()
     {
         Instance = this;
     }
 
-    public override void OnStartServer()
+    [Command(requiresAuthority = false)]
+    public void PlayerConnection(NetworkConnectionToClient playerConn)
     {
-        base.OnStartServer();
+        Debug.Log(playerConn);
+        AllPlayers.Add(playerConn);
+        playerCurrentCard.Add(playerConn, 0);
     }
 
-    public void ShuffleDeck(Transform cardSpawnPos)
+    [Server]
+    public void AddCardToDic(NetworkConnectionToClient playerConn, int value)
     {
-        List<GameObject> deck = cardManager.cards;
-        for (int i = 0; i < deck.Count; i++)
-        {
-            int randomIndex = Random.Range(i, deck.Count);
-            GameObject temp = deck[i];
-            deck[i] = deck[randomIndex];
-            deck[randomIndex] = temp;
-            Debug.Log(deck[randomIndex]);
-        }
-        // ShuffleDeck은 카드를 셔플하는 역할만 합니다.
+        playerCurrentCard[playerConn] = value;
+        drawCount += 1;
+
+        // 클라이언트에서 서버로 명령을 보냅니다.
+        WaitforBetting();
     }
 
-    [Client]
-    public void SetGameCard(List<GameObject> deck, Transform cardSpawnPos, Player player)
+    [Server]
+    public void WaitforBetting()
     {
-        Debug.Log(player);
-        if (count <= 0)
+        Debug.Log("drawCount  " + drawCount);
+        if(drawCount == 2)
         {
-            return;
+            Debug.Log("waitforbet");
+            count--;
+            Invoke(nameof(WaitAndCheckResult), 5);
         }
-
-        var cardObj = deck[deck.Count - count];
-        if (cardObj == null || cardSpawnPos == null)
-        {
-            return;
-        }
-
-        GameObject showCard = Instantiate(cardObj, cardSpawnPos);
-        Cards cardComponent = showCard.GetComponent<Cards>();
-        if (cardComponent != null)
-        {
-            playerCurrentCard[player] = cardComponent.value;
-        }
-        count--;
-        Debug.Log(player.name);
     }
-
-    [ClientRpc]
-    public void JudgeWinner()
+    [Server]
+    public void WaitAndCheckResult()
     {
-        Player winner = null;
+        NetworkConnectionToClient winner = null;
         int highestValue = -1;
 
-        foreach (KeyValuePair<Player, int> entry in playerCurrentCard)
+        foreach (KeyValuePair<NetworkConnectionToClient, int> entry in playerCurrentCard)
         {
+            Debug.Log($"player{entry.Key.identity.netId},{entry.Value}");
             if (entry.Value > highestValue)
             {
                 highestValue = entry.Value;
                 winner = entry.Key;
             }
         }
-
         if (winner != null)
         {
             Debug.Log(winner);
 
-            // 승자에게는 승리 메시지를 표시하고 패자에게는 패배 메시지를 표시
-            foreach (Player player in playerCurrentCard.Keys)
+
+            foreach (NetworkConnectionToClient conn in AllPlayers)
             {
-                if (player == winner)
+                if (conn == winner)
                 {
-                    player.GetComponent<UIManager>().WinnerText();
+                    conn.identity.GetComponent<Player>().SetWinOrLose(true);
                 }
-                else
+                else if (conn != winner)
                 {
-                    player.GetComponent<UIManager>().LoserText();
+                    conn.identity.GetComponent<Player>().SetWinOrLose(false);
                 }
             }
         }
-       
     }
-
-
+    public void DestroyUsedCard()
+    {
+        //foreach (var item in playerCurrentCard)
+        //{
+            
+        //}
+    }
 }
