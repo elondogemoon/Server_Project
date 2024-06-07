@@ -75,7 +75,9 @@ public class UIManager : NetworkBehaviour
         
         Debug.Log("¿Ã∞≈ »£√‚µ ");
         winnerText.SetActive(true);
-        
+        dieButton.enabled = true;
+        bettingButton.enabled = true;
+
     }
 
     public void LoserText()
