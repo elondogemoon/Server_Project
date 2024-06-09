@@ -77,7 +77,7 @@ public class UIManager : NetworkBehaviour
         winnerText.SetActive(true);
         dieButton.enabled = true;
         bettingButton.enabled = true;
-
+        getChip *= 2;
     }
 
     public void LoserText()

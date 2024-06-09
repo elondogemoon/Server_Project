@@ -31,7 +31,7 @@ public class Player : NetworkBehaviour
     }
 
     [Command]
-    private void InstantiateAndAddDic(string cardName, NetworkConnectionToClient conn)
+    public void InstantiateAndAddDic(string cardName, NetworkConnectionToClient conn)
     {
         GameObject prefab = CardPrefabReference.Instance.GetPrefab(cardName);
         GameObject cardObject = Instantiate(prefab);
